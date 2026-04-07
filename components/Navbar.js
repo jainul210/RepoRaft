@@ -9,7 +9,7 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/100 backdrop-blur-l">
+    <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         
         <Link href="/" className="flex items-center gap-2 group">
@@ -22,13 +22,13 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Center tagline on larger screens */}
+
         <div className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-muted-foreground md:flex">
           <Sparkles className="h-3 w-3 text-violet-400" />
           Resources curated by students, for students
         </div>
 
-        {/* Auth Actions */}
+
         <div className="flex items-center gap-3">
           {status === 'loading' ? (
             <div className="h-8 w-24 animate-pulse rounded-lg bg-white/10" />

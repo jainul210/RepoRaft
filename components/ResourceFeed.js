@@ -8,17 +8,17 @@ import { Search, SlidersHorizontal, Inbox } from 'lucide-react';
 export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, currentUserId }) {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('top'); // 'top' | 'new'
+  const [sortBy, setSortBy] = useState('top');
 
   const filtered = useMemo(() => {
     let result = [...resources];
 
-    // Category filter
+
     if (activeCategory !== 'All') {
       result = result.filter((r) => r.category === activeCategory);
     }
 
-    // Search filter (title + description + category)
+
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter(
@@ -30,7 +30,7 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
       );
     }
 
-    // Sort
+
     if (sortBy === 'top') {
       result.sort((a, b) => b.upvote_count - a.upvote_count);
     } else {
@@ -54,7 +54,7 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
           />
         </div>
 
-        {/* Sort toggle */}
+
         <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/5 p-1">
           <SlidersHorizontal className="ml-2 h-3.5 w-3.5 text-muted-foreground/60" />
           {['top', 'new'].map((s) => (

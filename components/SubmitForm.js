@@ -119,7 +119,7 @@ export default function SubmitForm({ initialData }) {
         />
       </Field>
 
-      {/* Status messages */}
+
       {status === 'error' && (
         <div className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />

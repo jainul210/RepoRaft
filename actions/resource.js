@@ -144,7 +144,7 @@ export async function deleteResource(resourceId) {
     .from('resources')
     .delete()
     .eq('id', resourceId)
-    .eq('user_id', session.user.id); // Security: ensure ownership
+    .eq('user_id', session.user.id);
 
   if (error) {
     console.error('deleteResource error:', error);

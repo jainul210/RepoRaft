@@ -44,9 +44,9 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      {/* Hero Section */}
+
       <div className="relative mb-14 overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-br from-violet-950/60 via-indigo-950/40 to-background p-10 text-center glow-violet">
-        {/* Decorative blobs */}
+
         <div className="absolute left-1/4 top-0 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/20 blur-3xl" />
         <div className="absolute right-1/4 bottom-0 h-40 w-40 translate-x-1/2 translate-y-1/2 rounded-full bg-indigo-600/20 blur-3xl" />
 
@@ -88,7 +88,7 @@ export default async function HomePage() {
             )}
           </div>
 
-          {/* Stats bar */}
+
           <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/5 pt-8">
             {[
               { icon: BookOpen, label: 'Resources', value: stats.resources },
@@ -107,7 +107,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Resource Feed */}
+
       <ResourceFeed
         resources={resources}
         userUpvotedIds={userUpvotedIds}

@@ -138,7 +138,7 @@ export default function ResourceCard({ resource, userUpvoted, isLoggedIn, curren
           </p>
         )}
 
-        {/* Meta row */}
+
         <div className="mt-3 flex flex-wrap items-center justify-between text-xs text-muted-foreground/60 w-full">
           <div className="flex flex-wrap items-center gap-3">
             <span className="flex items-center gap-1">
