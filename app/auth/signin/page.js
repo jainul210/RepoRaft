@@ -20,7 +20,7 @@ function SignInContent() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">
-              Welcome to <span className="text-violet-400">ScholarHub</span>
+              Welcome to <span className="text-violet-400">RepoRaft</span>
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Sign in to share resources and upvote your favourites
