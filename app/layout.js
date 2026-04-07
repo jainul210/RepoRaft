@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
           <footer className="mt-24 border-t border-white/5 py-8 text-center text-xs text-muted-foreground">
             <p>
               Built with ❤️ by students for students ·{' '}
-              <span className="text-violet-400">ScholarHub</span>
+              <span className="text-violet-400">RepoRaft</span>
             </p>
           </footer>
         </Providers>
