@@ -17,8 +17,8 @@ export default function Navbar() {
             <BookOpen className="h-4 w-4 text-white" />
           </div>
           <span className="text-lg font-bold tracking-tight">
-            <span className="text-white">Scholar</span>
-            <span className="text-violet-400">Hub</span>
+            <span className="text-white">Repo</span>
+            <span className="text-violet-400">Raft</span>
           </span>
         </Link>
 

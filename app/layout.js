@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Z-Axis — Community Resource Hub",
+  title: "RepoRaft — Community Resource Hub",
   description:
     'A community-curated platform where students share the best tutorials, GitHub repos, PDFs, and learning resources.',
   keywords: ['student resources', 'tutorials', 'learning', 'community', 'education'],
