@@ -1,40 +1,13 @@
-import { getServerSession } from 'next-auth';
-import authOptions from '@/lib/auth';
-import { createServerSupabaseClient } from '@/lib/supabase';
 import ResourceFeed from '@/components/ResourceFeed';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Flame, Users, Zap } from 'lucide-react';
+import { dummyResources } from '@/lib/dummyData';
 
-async function getResources() {
-  const supabase = createServerSupabaseClient();
-  const { data, error } = await supabase
-    .from('resources')
-    .select('*, profiles(name, image)')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching resources:', error);
-    return [];
-  }
-  return data || [];
-}
-
-async function getUserUpvotes(userId) {
-  if (!userId) return [];
-  const supabase = createServerSupabaseClient();
-  const { data } = await supabase
-    .from('upvotes')
-    .select('resource_id')
-    .eq('user_id', userId);
-  return (data || []).map((u) => u.resource_id);
-}
-
-export default async function HomePage() {
-  const session = await getServerSession(authOptions);
-  const [resources, userUpvotedIds] = await Promise.all([
-    getResources(),
-    getUserUpvotes(session?.user?.id),
-  ]);
+export default function HomePage() {
+  const resources = [...dummyResources].sort(
+    (a, b) => b.upvote_count - a.upvote_count
+  );
+  const userUpvotedIds = [];
 
   const stats = {
     resources: resources.length,
@@ -68,32 +41,20 @@ export default async function HomePage() {
           </p>
 
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            {!session && (
-              <Link
-                href="/api/auth/signin"
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/40 active:scale-95"
-              >
-                Join the community
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            )}
-            {session && (
-              <Link
-                href="/submit"
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-500 hover:to-indigo-500 active:scale-95"
-              >
-                Share a Resource
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            )}
+            <Link
+              href="/api/auth/signin"
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/40 active:scale-95"
+            >
+              Join the community
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
-
 
           <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/5 pt-8">
             {[
               { icon: BookOpen, label: 'Resources', value: stats.resources },
               { icon: Zap, label: 'Categories', value: stats.categories },
-              { icon: Users, label: 'Total Upvotes', value: stats.totalUpvotes },
+              { icon: Users, label: 'Total Upvotes', value: stats.totalUpvotes.toLocaleString() },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} className="text-center">
                 <div className="mb-1 flex justify-center">
@@ -107,12 +68,11 @@ export default async function HomePage() {
         </div>
       </div>
 
-
       <ResourceFeed
         resources={resources}
         userUpvotedIds={userUpvotedIds}
-        isLoggedIn={!!session}
-        currentUserId={session?.user?.id}
+        isLoggedIn={false}
+        currentUserId={null}
       />
     </div>
   );
