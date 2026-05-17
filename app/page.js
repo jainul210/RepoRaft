@@ -1,13 +1,48 @@
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/auth';
+import { createServerSupabaseClient } from '@/lib/supabase';
 import ResourceFeed from '@/components/ResourceFeed';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Flame, Users, Zap } from 'lucide-react';
 import { dummyResources } from '@/lib/dummyData';
 
-export default function HomePage() {
-  const resources = [...dummyResources].sort(
-    (a, b) => b.upvote_count - a.upvote_count
-  );
-  const userUpvotedIds = [];
+async function getResources() {
+  try {
+    const supabase = createServerSupabaseClient();
+    const { data, error } = await supabase
+      .from('resources')
+      .select('*, profiles(name, image)')
+      .order('created_at', { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return dummyResources;
+    }
+    return data;
+  } catch {
+    return dummyResources;
+  }
+}
+
+async function getUserUpvotes(userId) {
+  if (!userId) return [];
+  try {
+    const supabase = createServerSupabaseClient();
+    const { data } = await supabase
+      .from('upvotes')
+      .select('resource_id')
+      .eq('user_id', userId);
+    return (data || []).map((u) => u.resource_id);
+  } catch {
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+  const [resources, userUpvotedIds] = await Promise.all([
+    getResources(),
+    getUserUpvotes(session?.user?.id),
+  ]);
 
   const stats = {
     resources: resources.length,
@@ -41,13 +76,24 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/api/auth/signin"
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/40 active:scale-95"
-            >
-              Join the community
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            {!session && (
+              <Link
+                href="/api/auth/signin"
+                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/40 active:scale-95"
+              >
+                Join the community
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
+            {session && (
+              <Link
+                href="/submit"
+                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-all hover:from-violet-500 hover:to-indigo-500 active:scale-95"
+              >
+                Share a Resource
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
           </div>
 
           <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/5 pt-8">
@@ -71,8 +117,8 @@ export default function HomePage() {
       <ResourceFeed
         resources={resources}
         userUpvotedIds={userUpvotedIds}
-        isLoggedIn={false}
-        currentUserId={null}
+        isLoggedIn={!!session}
+        currentUserId={session?.user?.id}
       />
     </div>
   );
