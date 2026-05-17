@@ -136,20 +136,21 @@ export default function SubmitForm({ initialData }) {
       <button
         type="submit"
         disabled={status === 'loading' || status === 'success'}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-all hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+        className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/20 transition-shadow duration-300 hover:shadow-violet-500/40 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
       >
+        <span className="absolute inset-0 bg-gradient-to-r from-violet-500 to-indigo-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-disabled:hidden" />
         {status === 'loading' ? (
           <>
-            <Loader2 className="h-4 w-4 animate-spin" />
-            {initialData ? 'Updating...' : 'Sharing...'}
+            <Loader2 className="relative h-4 w-4 animate-spin" />
+            <span className="relative">{initialData ? 'Updating...' : 'Sharing...'}</span>
           </>
         ) : status === 'success' ? (
           <>
-            <CheckCircle className="h-4 w-4" />
-            {initialData ? 'Updated!' : 'Shared!'}
+            <CheckCircle className="relative h-4 w-4" />
+            <span className="relative">{initialData ? 'Updated!' : 'Shared!'}</span>
           </>
         ) : (
-          initialData ? 'Update Resource' : 'Share Resource'
+          <span className="relative">{initialData ? 'Update Resource' : 'Share Resource'}</span>
         )}
       </button>
     </form>
