@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react';
 import ResourceCard from './ResourceCard';
 import CategoryFilter from './CategoryFilter';
-import { Search, SlidersHorizontal, Inbox } from 'lucide-react';
 
 export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, currentUserId }) {
   const [search, setSearch] = useState('');
@@ -13,11 +12,9 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
   const filtered = useMemo(() => {
     let result = [...resources];
 
-
     if (activeCategory !== 'All') {
       result = result.filter((r) => r.category === activeCategory);
     }
-
 
     if (search.trim()) {
       const q = search.trim().toLowerCase();
@@ -30,7 +27,6 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
       );
     }
 
-
     if (sortBy === 'top') {
       result.sort((a, b) => b.upvote_count - a.upvote_count);
     } else {
@@ -41,71 +37,133 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
   }, [resources, search, activeCategory, sortBy]);
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+      {/* Search + Sort row */}
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+
+        {/* Search */}
+        <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
+          <span
+            className="material-symbols-outlined"
+            style={{
+              position: 'absolute',
+              left: '14px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: 'var(--outline)',
+              pointerEvents: 'none',
+              fontSize: '18px',
+            }}
+          >
+            search
+          </span>
           <input
             type="text"
             placeholder="Search resources, topics, URLs..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-muted-foreground focus:border-violet-500/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all"
+            className="search-input"
+            style={{
+              width: '100%',
+              paddingLeft: '44px',
+              paddingRight: '16px',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+              fontSize: '14px',
+              lineHeight: '20px',
+            }}
           />
         </div>
 
-
-        <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/5 p-1">
-          <SlidersHorizontal className="ml-2 h-3.5 w-3.5 text-muted-foreground/60" />
-          {['top', 'new'].map((s) => (
+        {/* Sort toggle */}
+        <div className="sort-toggle">
+          <span
+            className="material-symbols-outlined"
+            style={{ fontSize: '15px', color: 'var(--outline)', marginLeft: '8px' }}
+          >
+            tune
+          </span>
+          {[
+            { key: 'top', label: '🔥 Top' },
+            { key: 'new', label: '✨ New' },
+          ].map(({ key, label }) => (
             <button
-              key={s}
-              onClick={() => setSortBy(s)}
-              className={`rounded-lg px-3 py-1 text-xs font-medium capitalize transition-all ${
-                sortBy === s
-                  ? 'bg-violet-600 text-white shadow-sm'
-                  : 'text-muted-foreground hover:text-white'
-              }`}
+              key={key}
+              onClick={() => setSortBy(key)}
+              className={sortBy === key ? 'sort-btn-active' : 'sort-btn-inactive'}
             >
-              {s === 'top' ? '🔥 Top' : '✨ New'}
+              {label}
             </button>
           ))}
         </div>
       </div>
-      
+
+      {/* Category filter */}
       <CategoryFilter active={activeCategory} onSelect={setActiveCategory} />
 
+      {/* Result count */}
       {(search || activeCategory !== 'All') && (
-        <p className="text-xs text-muted-foreground">
+        <p style={{ fontSize: '13px', color: 'var(--on-surface-variant)' }}>
           {filtered.length} result{filtered.length !== 1 ? 's' : ''}
-          {search && <> for &ldquo;<span className="text-white">{search}</span>&rdquo;</>}
+          {search && <> for &ldquo;<span style={{ color: 'var(--on-surface)', fontWeight: 500 }}>{search}</span>&rdquo;</>}
           {activeCategory !== 'All' && (
-            <> in <span className="text-violet-400">{activeCategory}</span></>
+            <> in <span style={{ color: 'var(--primary)', fontWeight: 500 }}>{activeCategory}</span></>
           )}
         </p>
       )}
 
+      {/* List or Empty State */}
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/10 py-20 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
-            <Inbox className="h-7 w-7 text-muted-foreground" />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 'var(--stack-md)',
+            padding: '80px 0',
+            textAlign: 'center',
+            borderRadius: '1rem',
+            border: '2px dashed var(--outline-variant)',
+          }}
+        >
+          <div className="empty-state-circle">
+            <span className="material-symbols-outlined" style={{ color: 'var(--outline)', fontSize: '36px' }}>
+              inbox
+            </span>
           </div>
           <div>
-            <p className="font-semibold text-white">No resources found</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {search
-                ? 'Try a different search term'
-                : 'Be the first to share a resource in this category!'}
+            <p style={{ fontSize: '16px', fontWeight: '600', color: 'var(--on-surface)' }}>
+              No resources found
+            </p>
+            <p style={{ marginTop: '4px', fontSize: '13px', color: 'var(--on-surface-variant)' }}>
+              {search ? 'Try a different search term' : 'Be the first to share a resource in this category!'}
             </p>
           </div>
+          <button
+            onClick={() => { setSearch(''); setActiveCategory('All'); }}
+            style={{
+              marginTop: '4px',
+              color: 'var(--primary)',
+              fontSize: '12px',
+              fontWeight: '600',
+              letterSpacing: '0.05em',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              textDecoration: 'underline',
+            }}
+          >
+            Reset filters
+          </button>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {filtered.map((resource, i) => (
             <div
               key={resource.id}
               style={{ animationDelay: `${i * 40}ms` }}
-              className="animate-slide-up opacity-0 [animation-fill-mode:forwards]"
             >
               <ResourceCard
                 resource={resource}

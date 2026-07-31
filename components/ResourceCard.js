@@ -4,20 +4,33 @@ import { useState, useOptimistic, useTransition } from 'react';
 import { toggleUpvote, deleteResource } from '@/actions/resource';
 import { ChevronUp, ExternalLink, Clock, User, Edit2, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
 
 const CATEGORY_COLORS = {
-  'Web Dev': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  'Data Structures': 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  'Algorithms': 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-  'Machine Learning': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  'Physics': 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-  'Mathematics': 'bg-pink-500/10 text-pink-400 border-pink-500/20',
-  'Database': 'bg-green-500/10 text-green-400 border-green-500/20',
-  'DevOps': 'bg-red-500/10 text-red-400 border-red-500/20',
-  'Mobile Dev': 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-  'System Design': 'bg-teal-500/10 text-teal-400 border-teal-500/20',
-  'Other': 'bg-gray-500/10 text-gray-400 border-gray-500/20',
+  'Web Dev':         'var(--cat-web)',
+  'Data Structures': 'var(--cat-ds)',
+  'Algorithms':      'var(--cat-algo)',
+  'Machine Learning':'var(--cat-ml)',
+  'Physics':         'var(--cat-physics)',
+  'Mathematics':     'var(--cat-math)',
+  'Database':        'var(--cat-db)',
+  'DevOps':          'var(--cat-devops)',
+  'Mobile Dev':      'var(--cat-mobile)',
+  'System Design':   'var(--cat-system)',
+  'Other':           'var(--cat-other)',
+};
+
+const CATEGORY_BG = {
+  'Web Dev':         'var(--cat-web-bg)',
+  'Data Structures': 'var(--cat-ds-bg)',
+  'Algorithms':      'var(--cat-algo-bg)',
+  'Machine Learning':'var(--cat-ml-bg)',
+  'Physics':         'var(--cat-physics-bg)',
+  'Mathematics':     'var(--cat-math-bg)',
+  'Database':        'var(--cat-db-bg)',
+  'DevOps':          'var(--cat-devops-bg)',
+  'Mobile Dev':      'var(--cat-mobile-bg)',
+  'System Design':   'var(--cat-system-bg)',
+  'Other':           'var(--cat-other-bg)',
 };
 
 function formatDate(dateStr) {
@@ -54,9 +67,7 @@ export default function ResourceCard({ resource, userUpvoted, isLoggedIn, curren
 
   const handleUpvote = () => {
     if (!isLoggedIn || isPending) return;
-
     startTransition(async () => {
-      
       addOptimistic(optimisticState.upvoted ? 'downvote' : 'upvote');
       await toggleUpvote(resource.id);
     });
@@ -69,110 +80,177 @@ export default function ResourceCard({ resource, userUpvoted, isLoggedIn, curren
     }
   };
 
-  const categoryColor =
-    CATEGORY_COLORS[resource.category] || CATEGORY_COLORS['Other'];
+  const catColor = CATEGORY_COLORS[resource.category] || CATEGORY_COLORS['Other'];
+  const catBg    = CATEGORY_BG[resource.category]    || CATEGORY_BG['Other'];
 
   return (
-    <div className="group relative flex gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-5 transition-all duration-200 hover:border-violet-500/20 hover:bg-white/[0.05] hover:shadow-lg hover:shadow-violet-500/5 animate-slide-up">
+    <div className="resource-list-card animate-slide-up">
 
-      <div className="flex flex-shrink-0 flex-col items-center gap-1 pt-0.5">
+      {/* Left: Upvote */}
+      <div style={{ display: 'flex', flexShrink: 0, flexDirection: 'column', alignItems: 'center', gap: '4px', paddingTop: '2px' }}>
         <button
           onClick={handleUpvote}
           disabled={!isLoggedIn || isPending}
           title={isLoggedIn ? 'Upvote this resource' : 'Sign in to upvote'}
-          className={cn(
-            'flex h-10 w-10 flex-col items-center justify-center rounded-xl border text-xs font-bold transition-all duration-150 active:scale-90',
-            optimisticState.upvoted
-              ? 'border-violet-500/40 bg-violet-500/20 text-violet-400 shadow-md shadow-violet-500/20'
-              : isLoggedIn
-              ? 'border-white/10 bg-white/5 text-muted-foreground hover:border-violet-500/40 hover:bg-violet-500/10 hover:text-violet-400'
-              : 'cursor-not-allowed border-white/5 bg-transparent text-white/20',
-            isPending && 'opacity-60'
-          )}
+          className={optimisticState.upvoted ? 'upvote-box upvote-box-active' : 'upvote-box upvote-box-inactive'}
+          style={{
+            opacity: isPending ? 0.6 : 1,
+            cursor: !isLoggedIn ? 'not-allowed' : 'pointer',
+          }}
         >
           <ChevronUp
-            className={cn(
-              'h-5 w-5 transition-transform',
-              optimisticState.upvoted && 'scale-110'
-            )}
+            size={20}
+            style={{
+              transform: optimisticState.upvoted ? 'scale(1.1)' : 'scale(1)',
+              transition: 'transform 0.15s',
+            }}
           />
         </button>
         <span
-          className={cn(
-            'text-sm font-semibold tabular-nums transition-colors',
-            optimisticState.upvoted ? 'text-violet-400' : 'text-muted-foreground'
-          )}
+          style={{
+            fontSize: '13px',
+            fontWeight: '600',
+            color: optimisticState.upvoted ? 'var(--primary)' : 'var(--on-surface-variant)',
+            transition: 'color 0.15s',
+            fontVariantNumeric: 'tabular-nums',
+          }}
         >
           {optimisticState.count}
         </span>
       </div>
 
-      
-      <div className="min-w-0 flex-1">
-        <div className="mb-2 flex flex-wrap items-start gap-2">
+      {/* Right: Content */}
+      <div style={{ minWidth: 0, flex: 1 }}>
+
+        {/* Category badge */}
+        <div style={{ marginBottom: '8px' }}>
           <span
-            className={cn(
-              'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium',
-              categoryColor
-            )}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              borderRadius: '9999px',
+              padding: '2px 10px',
+              fontSize: '11px',
+              fontWeight: '600',
+              letterSpacing: '0.04em',
+              background: catBg,
+              color: catColor,
+              border: `1px solid ${catColor}30`,
+            }}
           >
             {resource.category}
           </span>
         </div>
 
+        {/* Title */}
         <a
           href={resource.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group/link inline-flex items-start gap-1"
+          className="resource-title-link"
+          style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'flex-start', gap: '4px' }}
         >
-          <h3 className="text-base font-semibold text-white transition-colors group-hover/link:text-violet-300 leading-snug">
+          <h3
+            style={{
+              fontSize: '15px',
+              fontWeight: '600',
+              color: 'var(--on-surface)',
+              lineHeight: '1.4',
+              transition: 'color 0.2s',
+            }}
+          >
             {resource.title}
           </h3>
-          <ExternalLink className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover/link:opacity-100" />
+          <ExternalLink
+            size={13}
+            style={{ marginTop: '2px', flexShrink: 0, color: 'var(--outline)', opacity: 0 }}
+            className="ext-icon"
+          />
         </a>
 
+        {/* Description */}
         {resource.description && (
-          <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed line-clamp-2">
+          <p
+            style={{
+              marginTop: '6px',
+              fontSize: '13px',
+              lineHeight: '1.6',
+              color: 'var(--on-surface-variant)',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
             {resource.description}
           </p>
         )}
 
-
-        <div className="mt-3 flex flex-wrap items-center justify-between text-xs text-muted-foreground/60 w-full">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="flex items-center gap-1">
-              <ExternalLink className="h-3 w-3" />
+        {/* Meta row */}
+        <div
+          style={{
+            marginTop: '10px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '8px',
+          }}
+        >
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--outline)' }}>
+              <ExternalLink size={11} />
               {getDomain(resource.url)}
             </span>
-            <span className="flex items-center gap-1">
-              <User className="h-3 w-3" />
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--outline)' }}>
+              <User size={11} />
               {resource.profiles?.name || 'Anonymous'}
             </span>
-            <span className="flex items-center gap-1">
-              <Clock className="h-3 w-3" />
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--outline)' }}>
+              <Clock size={11} />
               {formatDate(resource.created_at)}
             </span>
           </div>
 
+          {/* Owner actions */}
           {currentUserId === resource.user_id && (
-            <div className="flex items-center gap-2">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Link
                 href={`/edit/${resource.id}`}
-                className="flex items-center gap-1 rounded p-1 hover:bg-white/10 hover:text-violet-400 transition-colors"
+                className="card-action-btn card-edit-btn"
                 title="Edit resource"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '4px 6px',
+                  borderRadius: '6px',
+                  color: 'var(--on-surface-variant)',
+                  transition: 'all 0.15s',
+                  gap: '4px',
+                  fontSize: '12px',
+                }}
               >
-                <Edit2 className="h-4 w-4" />
-                <span className="sr-only">Edit</span>
+                <Edit2 size={13} />
               </Link>
               <button
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="flex items-center gap-1 rounded p-1 hover:bg-red-500/10 hover:text-red-400 transition-colors disabled:opacity-50"
                 title="Delete resource"
+                className="card-action-btn card-delete-btn"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '4px 6px',
+                  borderRadius: '6px',
+                  color: 'var(--on-surface-variant)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s',
+                  opacity: isDeleting ? 0.5 : 1,
+                }}
               >
-                <Trash2 className="h-4 w-4" />
-                <span className="sr-only">Delete</span>
+                <Trash2 size={13} />
               </button>
             </div>
           )}

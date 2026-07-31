@@ -3,79 +3,180 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, Plus, LogIn, LogOut, Sparkles } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const [activeNav, setActiveNav] = useState('resources');
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/20 transition-transform group-hover:scale-110">
-            <BookOpen className="h-4 w-4 text-white" />
-          </div>
-          <span className="text-lg font-bold tracking-tight">
-            <span className="text-white">Repo</span>
-            <span className="text-violet-400">Raft</span>
-          </span>
-        </Link>
-
-
-        <div className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-muted-foreground md:flex">
-          <Sparkles className="h-3 w-3 text-violet-400" />
-          Resources curated by students, for students
+    <header style={{
+      position: 'fixed',
+      top: 'var(--stack-md)',
+      left: 0,
+      right: 0,
+      zIndex: 50,
+      display: 'flex',
+      justifyContent: 'center',
+      padding: '0 var(--container-padding)',
+    }}>
+      <nav className="navbar-pill" style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--base)',
+        padding: 'var(--stack-sm)',
+      }}>
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', padding: '0 var(--stack-md)', marginRight: 'var(--stack-md)' }}>
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <span style={{
+              fontSize: '32px',
+              lineHeight: '40px',
+              fontWeight: '600',
+              letterSpacing: '-0.01em',
+              color: 'var(--primary)',
+            }}>
+              RepoRaft
+            </span>
+          </Link>
         </div>
 
+        {/* Nav Links */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--base)' }}>
+          <Link
+            href="/"
+            onClick={() => setActiveNav('resources')}
+            style={{ textDecoration: 'none' }}
+          >
+            <span
+              className={activeNav === 'resources' ? 'nav-item-active' : 'nav-item'}
+              style={{
+                display: 'block',
+                padding: '0.5rem 1.5rem',
+                fontSize: '12px',
+                fontWeight: '600',
+                letterSpacing: '0.05em',
+                cursor: 'pointer',
+              }}
+            >
+              Resources
+            </span>
+          </Link>
 
-        <div className="flex items-center gap-3">
-          {status === 'loading' ? (
-            <div className="h-8 w-24 animate-pulse rounded-lg bg-white/10" />
-          ) : session ? (
-            <>
-              <Link
-                href="/submit"
-                className="flex items-center gap-1.5 rounded-lg bg-violet-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:bg-violet-500 hover:shadow-lg hover:shadow-violet-500/20 active:scale-95"
-              >
-                <Plus className="h-4 w-4" />
-                <span className="hidden sm:inline">Share Resource</span>
-              </Link>
+          <a
+            href="#"
+            onClick={() => setActiveNav('categories')}
+            style={{ textDecoration: 'none' }}
+          >
+            <span
+              className={activeNav === 'categories' ? 'nav-item-active' : 'nav-item'}
+              style={{
+                display: 'block',
+                padding: '0.5rem 1.5rem',
+                fontSize: '12px',
+                fontWeight: '600',
+                letterSpacing: '0.05em',
+                cursor: 'pointer',
+              }}
+            >
+              Categories
+            </span>
+          </a>
 
-              <div className="flex items-center gap-2">
+          <a
+            href="#"
+            onClick={() => setActiveNav('community')}
+            style={{ textDecoration: 'none' }}
+          >
+            <span
+              className={activeNav === 'community' ? 'nav-item-active' : 'nav-item'}
+              style={{
+                display: 'block',
+                padding: '0.5rem 1.5rem',
+                fontSize: '12px',
+                fontWeight: '600',
+                letterSpacing: '0.05em',
+                cursor: 'pointer',
+              }}
+            >
+              Community
+            </span>
+          </a>
+
+          {/* Auth area */}
+          <div style={{ marginLeft: 'var(--stack-sm)' }}>
+            {status === 'loading' ? (
+              <div style={{ width: '80px', height: '36px', borderRadius: '9999px', background: 'var(--surface-container)', opacity: 0.6 }} />
+            ) : session ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--base)' }}>
+                <Link
+                  href="/submit"
+                  className="nav-cta"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '0.5rem 1.5rem',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    letterSpacing: '0.05em',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>add</span>
+                  <span>Share</span>
+                </Link>
                 {session.user?.image ? (
                   <Image
                     src={session.user.image}
                     alt={session.user.name || 'User'}
-                    width={32}
-                    height={32}
-                    className="rounded-full border-2 border-white/10"
+                    width={36}
+                    height={36}
+                    style={{ borderRadius: '9999px', border: '2px solid var(--surface-container)', cursor: 'pointer' }}
+                    onClick={() => signOut()}
+                    title="Sign out"
                   />
                 ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-violet-600 text-sm font-bold text-white">
+                  <button
+                    onClick={() => signOut()}
+                    title="Sign out"
+                    style={{
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '9999px',
+                      background: 'var(--primary)',
+                      color: 'var(--on-primary)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     {session.user?.name?.[0]?.toUpperCase() || 'U'}
-                  </div>
+                  </button>
                 )}
-                <button
-                  onClick={() => signOut()}
-                  className="flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-white"
-                  title="Sign out"
-                >
-                  <LogOut className="h-4 w-4" />
-                </button>
               </div>
-            </>
-          ) : (
-            <button
-              onClick={() => signIn()}
-              className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 active:scale-95"
-            >
-              <LogIn className="h-4 w-4" />
-              Sign In
-            </button>
-          )}
+            ) : (
+              <button
+                onClick={() => signIn()}
+                className="nav-cta"
+                style={{
+                  padding: '0.5rem 1.5rem',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  letterSpacing: '0.05em',
+                  cursor: 'pointer',
+                }}
+              >
+                Sign In
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }

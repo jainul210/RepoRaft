@@ -2,9 +2,11 @@ import { Inter } from 'next/font/google';
 import "./globals.css";
 import Providers from './providers';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ 
-  subsets: ['latin'] 
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 export const metadata = {
@@ -16,17 +18,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.className}>
+    <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
+      </head>
+      <body className={inter.className} style={{ backgroundColor: 'var(--background)', color: 'var(--on-background)' }}>
         <Providers>
           <Navbar />
           <main>{children}</main>
-          <footer className="mt-24 border-t border-white/5 py-8 text-center text-xs text-muted-foreground">
-            <p>
-              Built with ❤️ by students for students ·{' '}
-              <span className="text-violet-400">RepoRaft</span>
-            </p>
-          </footer>
+          <Footer />
         </Providers>
       </body>
     </html>
