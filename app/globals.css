@@ -549,3 +549,10 @@
   opacity: 1 !important;
 }
 
+/* ─── Dynamic Island ─── */
+@keyframes islandDrop {
+  from { opacity: 0; transform: scale(0.92) translateY(-6px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+.island-menu-item:hover  { background: var(--surface-container-low) !important; }
+.island-menu-danger:hover { background: rgba(186,26,26,0.07) !important; }

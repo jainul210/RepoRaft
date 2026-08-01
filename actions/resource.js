@@ -152,6 +152,7 @@ export async function deleteResource(resourceId) {
   }
 
   revalidatePath('/');
+  revalidatePath('/profile');
   return { success: true };
 }
 
