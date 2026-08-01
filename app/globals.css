@@ -2,57 +2,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 @import 'tailwindcss';
 
-/* ─── Design Tokens (RepoRaft Light Theme) ─── */
+/* ─── Design Tokens (Plum Blossom Palette: #0C0420, #5D3C64, #7B466A, #9F6496, #D391B0, #BA6E8F) ─── */
 @layer base {
   :root {
-    /* Primary brand blue */
-    --primary: #0058be;
-    --primary-container: #2170e4;
+    /* Primary brand Royal Plum (#7B466A) */
+    --primary: #7B466A;
+    --primary-container: #5D3C64;
     --on-primary: #ffffff;
-    --on-primary-container: #fefcff;
+    --on-primary-container: #f7ebf3;
 
-    /* Backgrounds */
-    --background: #f8f9ff;
-    --surface: #f8f9ff;
-    --surface-bright: #f8f9ff;
-    --surface-dim: #cbdbf5;
+    /* Backgrounds - Soft Rose Plum (#D391B0 & #BA6E8F porcelain tints) */
+    --background: #faf3f7;
+    --surface: #faf3f7;
+    --surface-bright: #fcf7fa;
+    --surface-dim: #ebd4e2;
     --surface-container-lowest: #ffffff;
-    --surface-container-low: #eff4ff;
-    --surface-container: #e5eeff;
-    --surface-container-high: #dce9ff;
-    --surface-container-highest: #d3e4fe;
-    --surface-tint: #005ac2;
+    --surface-container-low: #f5e8f0;
+    --surface-container: #ebd8e5;
+    --surface-container-high: #e2c7d8;
+    --surface-container-highest: #d391b0;
+    --surface-tint: #7B466A;
 
-    /* Text */
-    --on-background: #0b1c30;
-    --on-surface: #0b1c30;
-    --on-surface-variant: #424754;
+    /* Text - Deep Obsidian Plum (#0C0420) */
+    --on-background: #0C0420;
+    --on-surface: #0C0420;
+    --on-surface-variant: #5D3C64;
 
-    /* Secondary */
-    --secondary: #576065;
-    --secondary-container: #dbe4ea;
+    /* Secondary - Muted Orchid (#9F6496) */
+    --secondary: #9F6496;
+    --secondary-container: #f5e8f0;
     --on-secondary: #ffffff;
-    --on-secondary-container: #5d666b;
+    --on-secondary-container: #0C0420;
 
-    /* Tertiary */
-    --tertiary: #5b5c5c;
-    --tertiary-container: #747574;
+    /* Tertiary - Dusty Rose (#BA6E8F) */
+    --tertiary: #BA6E8F;
+    --tertiary-container: #e2c7d8;
     --on-tertiary: #ffffff;
-    --on-tertiary-container: #fdfcfb;
+    --on-tertiary-container: #0C0420;
 
-    /* Misc */
-    --outline: #727785;
-    --outline-variant: #c2c6d6;
-    --error: #ba1a1a;
-    --inverse-surface: #213145;
-    --inverse-on-surface: #eaf1ff;
-    --inverse-primary: #adc6ff;
+    /* Borders & Accents */
+    --outline: #9F6496;
+    --outline-variant: #e8d3e0;
+    --error: #b91c1c;
+    --inverse-surface: #0C0420;
+    --inverse-on-surface: #faf3f7;
+    --inverse-primary: #d391b0;
 
     /* Fixed dims */
-    --primary-fixed: #d8e2ff;
-    --primary-fixed-dim: #adc6ff;
-    --secondary-fixed: #dbe4ea;
-    --tertiary-fixed: #e3e2e1;
+    --primary-fixed: #f5e8f0;
+    --primary-fixed-dim: #d391b0;
+    --secondary-fixed: #f7ecf5;
+    --tertiary-fixed: #e2c7d8;
 
     /* Spacing */
     --stack-sm: 12px;
@@ -464,28 +464,28 @@
 
 /* ─── Category color tokens ─── */
 :root {
-  --cat-web:         #1d6fb8;
-  --cat-web-bg:      #dbeafe;
-  --cat-ds:          #b45309;
-  --cat-ds-bg:       #fef3c7;
-  --cat-algo:        #92400e;
-  --cat-algo-bg:     #fde68a;
-  --cat-ml:          #6d28d9;
-  --cat-ml-bg:       #ede9fe;
-  --cat-physics:     #0e7490;
-  --cat-physics-bg:  #cffafe;
-  --cat-math:        #be185d;
-  --cat-math-bg:     #fce7f3;
-  --cat-db:          #065f46;
-  --cat-db-bg:       #d1fae5;
-  --cat-devops:      #b91c1c;
-  --cat-devops-bg:   #fee2e2;
-  --cat-mobile:      #3730a3;
-  --cat-mobile-bg:   #e0e7ff;
-  --cat-system:      #0f766e;
-  --cat-system-bg:   #ccfbf1;
-  --cat-other:       #374151;
-  --cat-other-bg:    #f3f4f6;
+  --cat-web:         #7B466A;
+  --cat-web-bg:      #f5e8f0;
+  --cat-ds:          #9F6496;
+  --cat-ds-bg:       #f7ecf5;
+  --cat-algo:        #5D3C64;
+  --cat-algo-bg:     #ede2ed;
+  --cat-ml:          #BA6E8F;
+  --cat-ml-bg:       #f9ebf1;
+  --cat-physics:     #0C0420;
+  --cat-physics-bg:  #eae6f0;
+  --cat-math:        #D391B0;
+  --cat-math-bg:     #fbf0f5;
+  --cat-db:          #7B466A;
+  --cat-db-bg:       #f5e8f0;
+  --cat-devops:      #9F6496;
+  --cat-devops-bg:   #f7ecf5;
+  --cat-mobile:      #BA6E8F;
+  --cat-mobile-bg:   #f9ebf1;
+  --cat-system:      #5D3C64;
+  --cat-system-bg:   #ede2ed;
+  --cat-other:       #7B466A;
+  --cat-other-bg:    #f5e8f0;
 }
 
 /* ─── List-style resource card ─── */
@@ -501,9 +501,9 @@
   animation-fill-mode: forwards;
 }
 .resource-list-card:hover {
-  border-color: rgba(0, 88, 190, 0.25);
-  background: var(--surface-container-low);
-  box-shadow: 0 4px 20px rgba(0, 88, 190, 0.06);
+  border-color: rgba(123, 70, 106, 0.35);
+  background: var(--surface-container-lowest);
+  box-shadow: 0 4px 20px rgba(123, 70, 106, 0.08);
   transform: translateY(-1px);
 }
 
@@ -525,10 +525,10 @@
   transform: scale(0.9);
 }
 .upvote-box-active {
-  border-color: rgba(0, 88, 190, 0.4);
-  background: rgba(0, 88, 190, 0.1);
+  border-color: rgba(123, 70, 106, 0.4);
+  background: rgba(123, 70, 106, 0.08);
   color: var(--primary);
-  box-shadow: 0 4px 12px rgba(0, 88, 190, 0.15);
+  box-shadow: 0 4px 12px rgba(123, 70, 106, 0.12);
 }
 .upvote-box-inactive {
   border-color: var(--outline-variant);
@@ -536,8 +536,8 @@
   color: var(--on-surface-variant);
 }
 .upvote-box-inactive:hover {
-  border-color: rgba(0, 88, 190, 0.35);
-  background: rgba(0, 88, 190, 0.06);
+  border-color: rgba(123, 70, 106, 0.35);
+  background: rgba(123, 70, 106, 0.05);
   color: var(--primary);
 }
 
