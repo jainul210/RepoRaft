@@ -52,18 +52,23 @@ export default async function HomePage() {
     }}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 'var(--stack-lg)' }}>
 
-        {/* Resource Feed */}
-        <ResourceFeed
-          resources={resources}
-          userUpvotedIds={userUpvotedIds}
-          isLoggedIn={!!session}
-          currentUserId={session?.user?.id}
-        />
+        {/* Resource Feed — also contains the #categories anchor */}
+        <section id="resources">
+          <ResourceFeed
+            resources={resources}
+            userUpvotedIds={userUpvotedIds}
+            isLoggedIn={!!session}
+            currentUserId={session?.user?.id}
+          />
+        </section>
 
         {/* Community CTA Section */}
-        <CommunityCTA isLoggedIn={!!session} />
+        <section id="community">
+          <CommunityCTA isLoggedIn={!!session} />
+        </section>
 
       </div>
+
     </div>
   );
 }

@@ -556,3 +556,11 @@
 }
 .island-menu-item:hover  { background: var(--surface-container-low) !important; }
 .island-menu-danger:hover { background: rgba(186,26,26,0.07) !important; }
+
+/* ─── Anchor scroll offset (accounts for fixed navbar) ─── */
+#categories,
+#community,
+#resources {
+  scroll-margin-top: 90px;
+}
+

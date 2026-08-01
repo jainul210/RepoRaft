@@ -100,7 +100,9 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
       </div>
 
       {/* Category filter */}
-      <CategoryFilter active={activeCategory} onSelect={setActiveCategory} />
+      <div id="categories">
+        <CategoryFilter active={activeCategory} onSelect={setActiveCategory} />
+      </div>
 
       {/* Result count */}
       {(search || activeCategory !== 'All') && (

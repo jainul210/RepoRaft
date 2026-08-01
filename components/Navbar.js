@@ -74,8 +74,8 @@ export default function Navbar() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
           {[
             { key: 'resources', label: 'Resources', href: '/' },
-            { key: 'categories', label: 'Categories', href: '#' },
-            { key: 'community', label: 'Community', href: '#' },
+            { key: 'categories', label: 'Categories', href: '/#categories' },
+            { key: 'community', label: 'Community', href: '/#community' },
           ].map(({ key, label, href }) => (
             <Link key={key} href={href} onClick={() => setActiveNav(key)} style={{ textDecoration: 'none' }}>
               <span style={{
