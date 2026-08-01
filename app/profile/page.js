@@ -37,7 +37,7 @@ export default async function ProfilePage() {
     <div style={{
       maxWidth: '760px',
       margin: '0 auto',
-      padding: '100px 24px 80px',
+      padding: '120px 24px 80px',
     }}>
       {/* Back link */}
       <Link href="/" className="back-link" style={{

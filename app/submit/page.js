@@ -17,7 +17,7 @@ export default async function SubmitPage() {
   }
 
   return (
-    <div style={{ maxWidth: '640px', margin: '0 auto', padding: '48px 24px 80px' }}>
+    <div style={{ maxWidth: '640px', margin: '0 auto', padding: '120px 24px 80px' }}>
 
       {/* Back link */}
       <Link href="/" className="back-link" style={{
