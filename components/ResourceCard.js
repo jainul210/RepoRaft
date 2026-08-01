@@ -206,7 +206,7 @@ export default function ResourceCard({ resource, userUpvoted, isLoggedIn, curren
               <User size={11} />
               {resource.profiles?.name || 'Anonymous'}
             </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--outline)' }}>
+            <span suppressHydrationWarning style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--outline)' }}>
               <Clock size={11} />
               {formatDate(resource.created_at)}
             </span>

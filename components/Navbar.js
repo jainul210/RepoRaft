@@ -104,7 +104,7 @@ export default function Navbar() {
       </nav>
 
       {/* Auth Action — Right side pill (Sign In button OR Profile Dynamic Island) */}
-      {status === 'loading' ? (
+      {!mounted || status === 'loading' ? (
         <div style={{ width: '45px', height: '45px', borderRadius: '9999px', background: 'var(--surface-container-lowest)', border: '1px solid var(--outline-variant)', pointerEvents: 'all' }} />
       ) : session ? (
         <div ref={islandRef} style={{ position: 'relative', pointerEvents: 'all' }}>
