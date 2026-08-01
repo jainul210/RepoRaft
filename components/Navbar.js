@@ -93,39 +93,23 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Divider */}
-          <div style={{ width: '1px', height: '18px', background: 'var(--outline-variant)', margin: '0 6px' }} />
-
-          {/* Auth area inside pill */}
-          {status === 'loading' ? (
-            <div style={{ width: '76px', height: '33px', borderRadius: '9999px', background: 'var(--surface-container-low)' }} />
-          ) : session ? (
-            <Link
-              href="/submit"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '5px',
-                height: '33px', padding: '0 14px', fontSize: '13px', fontWeight: '600',
-                borderRadius: '9999px', background: 'var(--primary)',
-                color: 'var(--on-primary)', textDecoration: 'none',
-                border: 'none', transition: 'opacity 0.2s',
-              }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>add</span>
-              Share
-            </Link>
-          ) : (
-            <button
-              onClick={() => signIn()}
-              style={{
-                height: '33px', padding: '0 14px', fontSize: '13px', fontWeight: '600',
-                borderRadius: '9999px', background: 'var(--primary)',
-                color: 'var(--on-primary)', border: 'none', cursor: 'pointer',
-                transition: 'opacity 0.2s',
-              }}
-            >
-              Sign In
-            </button>
-          )}
+          {/* Divider & Sign In (shown when logged out) */}
+          {status === 'loading' ? null : !session ? (
+            <>
+              <div style={{ width: '1px', height: '18px', background: 'var(--outline-variant)', margin: '0 6px' }} />
+              <button
+                onClick={() => signIn()}
+                style={{
+                  height: '33px', padding: '0 14px', fontSize: '13px', fontWeight: '600',
+                  borderRadius: '9999px', background: 'var(--primary)',
+                  color: 'var(--on-primary)', border: 'none', cursor: 'pointer',
+                  transition: 'opacity 0.2s',
+                }}
+              >
+                Sign In
+              </button>
+            </>
+          ) : null}
         </div>
       </nav>
 
