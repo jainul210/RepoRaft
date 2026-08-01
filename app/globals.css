@@ -153,14 +153,14 @@
   background: var(--primary);
   color: var(--on-primary);
   border-radius: 9999px;
-  box-shadow: 0 8px 16px rgba(0, 88, 190, 0.2), inset 2px 2px 4px rgba(255, 255, 255, 0.4);
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
+  border: none;
 }
 .nav-cta:hover {
-  transform: scale(1.05);
+  opacity: 0.88;
 }
 .nav-cta:active {
-  transform: scale(0.95);
+  opacity: 0.75;
 }
 
 /* ─── Resource Cards ─── */
@@ -180,12 +180,11 @@
 
 /* ─── Search Input ─── */
 .search-input {
-  background: var(--surface-container-low);
-  border-radius: 0.75rem;
-  box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.05), inset -4px -4px 8px rgba(255, 255, 255, 1);
-  border: none;
+  background: var(--surface-container-lowest);
+  border-radius: 0.625rem;
+  border: 1px solid var(--outline-variant);
   outline: none;
-  transition: all 0.3s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   color: var(--on-surface);
   font-family: 'Inter', system-ui, sans-serif;
 }
@@ -193,7 +192,8 @@
   color: var(--outline);
 }
 .search-input:focus {
-  box-shadow: inset 2px 2px 4px rgba(0, 88, 190, 0.1), 0 0 0 2px rgba(0, 88, 190, 0.125);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 88, 190, 0.08);
 }
 
 /* ─── Filter Chips ─── */
@@ -201,25 +201,26 @@
   border-radius: 9999px;
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.05em;
-  padding: 0.5rem 1.5rem;
-  transition: all 0.3s ease;
+  letter-spacing: 0.03em;
+  padding: 6px 14px;
+  transition: all 0.2s ease;
   cursor: pointer;
-  border: none;
   white-space: nowrap;
 }
 .filter-chip-active {
   background: var(--primary);
   color: var(--on-primary);
-  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--primary);
 }
 .filter-chip-inactive {
-  background: var(--surface-container-low);
+  background: var(--surface-container-lowest);
   color: var(--on-surface-variant);
+  border: 1px solid var(--outline-variant);
 }
 .filter-chip-inactive:hover {
-  background: var(--surface-container-high);
-  color: var(--on-surface);
+  border-color: rgba(0, 88, 190, 0.3);
+  color: var(--primary);
+  background: rgba(0, 88, 190, 0.04);
 }
 
 /* ─── Upvote Button ─── */
@@ -277,10 +278,10 @@
 
 /* ─── Section Banner ─── */
 .section-banner {
-  background: var(--surface-container);
-  border-radius: 0.75rem;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: 0.875rem;
   padding: var(--stack-lg);
-  box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.02), inset 4px 4px 10px rgba(255, 255, 255, 0.8);
 }
 
 /* ─── Primary Button ─── */
@@ -385,14 +386,14 @@
 
 /* ─── Empty State ─── */
 .empty-state-circle {
-  width: 96px;
-  height: 96px;
+  width: 72px;
+  height: 72px;
   border-radius: 9999px;
-  background: var(--surface-container-low);
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.05);
   margin: 0 auto;
 }
 
@@ -400,11 +401,11 @@
 .sort-toggle {
   display: flex;
   align-items: center;
-  gap: 4px;
-  background: var(--surface-container-low);
+  gap: 2px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
   border-radius: 9999px;
   padding: 4px;
-  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .sort-btn-active {

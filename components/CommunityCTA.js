@@ -7,39 +7,27 @@ export default function CommunityCTA({ isLoggedIn }) {
   const [imageHovered, setImageHovered] = useState(false);
 
   return (
-    <section style={{ marginTop: '128px', position: 'relative' }}>
-      {/* Decorative blur blob */}
+    <section style={{ marginTop: '48px' }}>
       <div style={{
-        position: 'absolute',
-        top: '-64px',
-        left: '-48px',
-        width: '256px',
-        height: '256px',
-        background: 'rgba(0,88,190,0.05)',
-        borderRadius: '9999px',
-        filter: 'blur(48px)',
-        pointerEvents: 'none',
-      }} />
-
-      <div
-        className="section-banner"
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 'var(--stack-lg)',
-          flexWrap: 'wrap',
-        }}
-      >
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: '40px',
+        flexWrap: 'wrap',
+        padding: '32px',
+        background: 'var(--surface-container-lowest)',
+        border: '1px solid var(--outline-variant)',
+        borderRadius: '0.875rem',
+      }}>
         {/* Image */}
-        <div style={{ width: '100%', maxWidth: '340px', flexShrink: 0 }}>
+        <div style={{ width: '100%', maxWidth: '300px', flexShrink: 0 }}>
           <div
             style={{
-              borderRadius: '0.5rem',
+              borderRadius: '0.75rem',
               overflow: 'hidden',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.12)',
-              transform: imageHovered ? 'rotate(0deg)' : 'rotate(2deg)',
-              transition: 'transform 0.5s ease',
+              border: '1px solid var(--outline-variant)',
+              transform: imageHovered ? 'rotate(0deg) scale(1.01)' : 'rotate(1.5deg)',
+              transition: 'transform 0.4s ease',
             }}
             onMouseEnter={() => setImageHovered(true)}
             onMouseLeave={() => setImageHovered(false)}
@@ -47,56 +35,59 @@ export default function CommunityCTA({ isLoggedIn }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6PLAa3vfzySSp9jsrKd-2doH_NWONWqW0g2vraOkh72Q47TAUQ4GYF2T_gQPWC9faGKXuZXRDYCQBJSJXT7q5Qmncw7NPFkvGQMM82ofrTpXd4arTEl3cZd0wAZdnwaUeMucL_EbRFFuxtpLVgGTtifkRiILR3LdkDpcB4zB9CHMX-d6V9MqPXUj0PZrdPXhDe7-hxRf8OJpMGV5ym9PdckOHmyPK5fPCMAMrCzZslKk3hSO8dXtbtVixabe7hi2zIciWV5_3M0RL"
-              alt="A high-quality 3D clay-style illustration of a floating boat carrying digital folders and golden stars."
-              style={{ width: '100%', height: '256px', objectFit: 'cover', display: 'block' }}
+              alt="A clay-style illustration of a floating boat carrying digital folders and golden stars."
+              style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }}
             />
           </div>
         </div>
 
         {/* Text */}
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, minWidth: '260px' }}>
           <span style={{
-            fontSize: '12px',
-            fontWeight: '600',
-            letterSpacing: '0.1em',
-            color: 'var(--primary)',
-            textTransform: 'uppercase',
-            display: 'block',
-            marginBottom: 'var(--base)',
+            fontSize: '11px', fontWeight: '600', letterSpacing: '0.1em',
+            color: 'var(--primary)', textTransform: 'uppercase',
+            display: 'block', marginBottom: '8px',
           }}>
             Community Choice
           </span>
           <h2 style={{
-            fontSize: '48px',
-            lineHeight: '56px',
-            fontWeight: '700',
-            letterSpacing: '-0.02em',
-            color: 'var(--on-surface)',
-            marginBottom: 'var(--stack-md)',
+            fontSize: '26px', lineHeight: '1.3', fontWeight: '700',
+            letterSpacing: '-0.02em', color: 'var(--on-surface)', marginBottom: '12px',
           }}>
-            Join the Raft. <br />Share your findings.
+            Join the Raft.<br />Share your findings.
           </h2>
           <p style={{
-            fontSize: '16px',
-            lineHeight: '24px',
-            color: 'var(--on-surface-variant)',
-            marginBottom: 'var(--stack-lg)',
-            maxWidth: '512px',
+            fontSize: '14px', lineHeight: '1.7',
+            color: 'var(--on-surface-variant)', marginBottom: '24px', maxWidth: '420px',
           }}>
             Every repository on RepoRaft is hand-vetted by our core community.
             Become a contributor today and help others navigate the sea of code.
           </p>
-          <div style={{ display: 'flex', gap: 'var(--stack-md)', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             {isLoggedIn ? (
               <Link href="/submit" style={{ textDecoration: 'none' }}>
-                <button className="btn-primary">Submit Repo</button>
+                <button style={{
+                  padding: '10px 22px', fontSize: '13px', fontWeight: '600',
+                  borderRadius: '9999px', background: 'var(--primary)',
+                  color: 'var(--on-primary)', border: 'none', cursor: 'pointer',
+                  transition: 'opacity 0.2s',
+                }}>Submit Repo</button>
               </Link>
             ) : (
               <Link href="/api/auth/signin" style={{ textDecoration: 'none' }}>
-                <button className="btn-primary">Submit Repo</button>
+                <button style={{
+                  padding: '10px 22px', fontSize: '13px', fontWeight: '600',
+                  borderRadius: '9999px', background: 'var(--primary)',
+                  color: 'var(--on-primary)', border: 'none', cursor: 'pointer',
+                }}>Submit Repo</button>
               </Link>
             )}
-            <button className="btn-secondary">Browse Tags</button>
+            <button style={{
+              padding: '10px 22px', fontSize: '13px', fontWeight: '600',
+              borderRadius: '9999px', background: 'transparent',
+              color: 'var(--primary)', border: '1.5px solid var(--primary)',
+              cursor: 'pointer', transition: 'all 0.2s',
+            }}>Browse Tags</button>
           </div>
         </div>
       </div>

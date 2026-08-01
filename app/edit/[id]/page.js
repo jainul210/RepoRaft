@@ -25,81 +25,44 @@ export default async function EditPage({ params }) {
     .eq('id', id)
     .single();
 
-  if (error || !resource) {
-    redirect('/');
-  }
-
-  if (resource.user_id !== session.user.id) {
-    redirect('/');
-  }
+  if (error || !resource) redirect('/');
+  if (resource.user_id !== session.user.id) redirect('/');
 
   return (
-    <div style={{
-      maxWidth: '640px',
-      margin: '0 auto',
-      padding: '48px 24px 80px',
-    }}>
+    <div style={{ maxWidth: '640px', margin: '0 auto', padding: '48px 24px 80px' }}>
+
       {/* Back link */}
-      <Link
-        href="/"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          fontSize: '13px',
-          fontWeight: '500',
-          color: 'var(--on-surface-variant)',
-          textDecoration: 'none',
-          marginBottom: '32px',
-          transition: 'color 0.2s',
-        }}
-        className="back-link"
-      >
-        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>arrow_back</span>
+      <Link href="/" className="back-link" style={{
+        display: 'inline-flex', alignItems: 'center', gap: '5px',
+        fontSize: '13px', fontWeight: '500', color: 'var(--on-surface-variant)',
+        textDecoration: 'none', marginBottom: '28px', transition: 'color 0.2s',
+      }}>
+        <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>arrow_back</span>
         Back to feed
       </Link>
 
       {/* Page heading */}
-      <div style={{ marginBottom: '28px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-          <div style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '12px',
-            background: 'var(--surface-container-low)',
-            boxShadow: '8px 8px 20px rgba(0,88,190,0.08), inset 3px 3px 6px rgba(255,255,255,0.9)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <span className="material-symbols-outlined" style={{ color: 'var(--primary)', fontSize: '22px' }}>edit</span>
-          </div>
-          <div>
-            <h1 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--on-surface)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
-              Edit Resource
-            </h1>
-            <p style={{ fontSize: '14px', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
-              Update the details of your shared resource.
-            </p>
-          </div>
-        </div>
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{
+          fontSize: '22px', fontWeight: '700', color: 'var(--on-surface)',
+          letterSpacing: '-0.01em', marginBottom: '5px',
+        }}>
+          Edit Resource
+        </h1>
+        <p style={{ fontSize: '13px', color: 'var(--on-surface-variant)', lineHeight: '1.5' }}>
+          Update the details of your shared resource.
+        </p>
       </div>
 
       {/* Resource being edited */}
       <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '10px',
-        borderRadius: '0.875rem',
+        display: 'flex', alignItems: 'center', gap: '9px',
+        borderRadius: '0.75rem',
         border: '1px solid var(--outline-variant)',
         background: 'var(--surface-container-low)',
-        padding: '12px 16px',
-        marginBottom: '24px',
+        padding: '11px 14px', marginBottom: '20px',
       }}>
-        <span className="material-symbols-outlined" style={{ color: 'var(--outline)', fontSize: '18px' }}>
-          link
-        </span>
+        <span className="material-symbols-outlined" style={{ color: 'var(--outline)', fontSize: '16px' }}>link</span>
         <span style={{ fontSize: '13px', color: 'var(--on-surface-variant)', fontWeight: '500' }}>
           Editing: <span style={{ color: 'var(--on-surface)' }}>{resource.title}</span>
         </span>
@@ -108,9 +71,9 @@ export default async function EditPage({ params }) {
       {/* Form card */}
       <div style={{
         background: 'var(--surface-container-lowest)',
-        borderRadius: '1rem',
-        padding: '32px',
-        boxShadow: '20px 20px 40px rgba(0,88,190,0.06), inset 4px 4px 10px rgba(255,255,255,0.9)',
+        border: '1px solid var(--outline-variant)',
+        borderRadius: '0.875rem',
+        padding: '28px',
       }}>
         <SubmitForm initialData={resource} />
       </div>

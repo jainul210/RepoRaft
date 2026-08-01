@@ -87,10 +87,9 @@ export default function SubmitForm({ initialData }) {
 
   const inputStyle = {
     width: '100%',
-    borderRadius: '0.75rem',
-    border: '1.5px solid var(--outline-variant)',
-    background: 'var(--surface-container-low)',
-    boxShadow: 'inset 2px 2px 6px rgba(0,0,0,0.04)',
+    borderRadius: '0.625rem',
+    border: '1px solid var(--outline-variant)',
+    background: 'var(--surface-container-lowest)',
     padding: '10px 14px',
     fontSize: '14px',
     color: 'var(--on-surface)',
@@ -112,14 +111,8 @@ export default function SubmitForm({ initialData }) {
           defaultValue={initialData?.title || ''}
           required
           style={inputStyle}
-          onFocus={e => {
-            e.target.style.borderColor = 'var(--primary)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04), 0 0 0 3px rgba(0,88,190,0.1)';
-          }}
-          onBlur={e => {
-            e.target.style.borderColor = 'var(--outline-variant)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04)';
-          }}
+          onFocus={e => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,88,190,0.08)'; }}
+          onBlur={e => { e.target.style.borderColor = 'var(--outline-variant)'; e.target.style.boxShadow = 'none'; }}
         />
       </Field>
 
@@ -132,14 +125,8 @@ export default function SubmitForm({ initialData }) {
           defaultValue={initialData?.url || ''}
           required
           style={inputStyle}
-          onFocus={e => {
-            e.target.style.borderColor = 'var(--primary)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04), 0 0 0 3px rgba(0,88,190,0.1)';
-          }}
-          onBlur={e => {
-            e.target.style.borderColor = 'var(--outline-variant)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04)';
-          }}
+          onFocus={e => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,88,190,0.08)'; }}
+          onBlur={e => { e.target.style.borderColor = 'var(--outline-variant)'; e.target.style.boxShadow = 'none'; }}
         />
       </Field>
 
@@ -150,14 +137,8 @@ export default function SubmitForm({ initialData }) {
           required
           defaultValue={initialData?.category || ''}
           style={{ ...inputStyle, cursor: 'pointer', appearance: 'none' }}
-          onFocus={e => {
-            e.target.style.borderColor = 'var(--primary)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04), 0 0 0 3px rgba(0,88,190,0.1)';
-          }}
-          onBlur={e => {
-            e.target.style.borderColor = 'var(--outline-variant)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04)';
-          }}
+          onFocus={e => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,88,190,0.08)'; }}
+          onBlur={e => { e.target.style.borderColor = 'var(--outline-variant)'; e.target.style.boxShadow = 'none'; }}
         >
           <option value="" disabled style={{ color: 'var(--outline)' }}>
             Select a category...
@@ -178,14 +159,8 @@ export default function SubmitForm({ initialData }) {
           defaultValue={initialData?.description || ''}
           rows={3}
           style={{ ...inputStyle, resize: 'none', lineHeight: '1.6' }}
-          onFocus={e => {
-            e.target.style.borderColor = 'var(--primary)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04), 0 0 0 3px rgba(0,88,190,0.1)';
-          }}
-          onBlur={e => {
-            e.target.style.borderColor = 'var(--outline-variant)';
-            e.target.style.boxShadow = 'inset 2px 2px 6px rgba(0,0,0,0.04)';
-          }}
+          onFocus={e => { e.target.style.borderColor = 'var(--primary)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,88,190,0.08)'; }}
+          onBlur={e => { e.target.style.borderColor = 'var(--outline-variant)'; e.target.style.boxShadow = 'none'; }}
         />
       </Field>
 
