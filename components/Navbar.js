@@ -51,15 +51,17 @@ export default function Navbar() {
         display: 'flex',
         alignItems: 'center',
         gap: '4px',
-        padding: '6px',
+        padding: '5px 6px',
+        height: '45px',
         background: 'var(--surface-container-lowest)',
         border: '1px solid var(--outline-variant)',
         borderRadius: '9999px',
         boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+        boxSizing: 'border-box',
         pointerEvents: 'all',
       }}>
         {/* Logo */}
-        <div style={{ padding: '0 16px', marginRight: '8px' }}>
+        <div style={{ padding: '0 16px', marginRight: '4px' }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
             <span style={{
               fontSize: '18px', fontWeight: '700',
@@ -79,7 +81,8 @@ export default function Navbar() {
           ].map(({ key, label, href }) => (
             <Link key={key} href={href} onClick={() => setActiveNav(key)} style={{ textDecoration: 'none' }}>
               <span style={{
-                display: 'block', padding: '7px 14px', fontSize: '13px',
+                display: 'flex', alignItems: 'center', height: '33px',
+                padding: '0 14px', fontSize: '13px',
                 fontWeight: '600', borderRadius: '9999px', cursor: 'pointer',
                 transition: 'all 0.2s',
                 background: activeNav === key ? 'var(--primary)' : 'transparent',
@@ -91,17 +94,17 @@ export default function Navbar() {
           ))}
 
           {/* Divider */}
-          <div style={{ width: '1px', height: '20px', background: 'var(--outline-variant)', margin: '0 6px' }} />
+          <div style={{ width: '1px', height: '18px', background: 'var(--outline-variant)', margin: '0 6px' }} />
 
           {/* Auth area inside pill */}
           {status === 'loading' ? (
-            <div style={{ width: '76px', height: '34px', borderRadius: '9999px', background: 'var(--surface-container-low)' }} />
+            <div style={{ width: '76px', height: '33px', borderRadius: '9999px', background: 'var(--surface-container-low)' }} />
           ) : session ? (
             <Link
               href="/submit"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '5px',
-                padding: '7px 14px', fontSize: '13px', fontWeight: '600',
+                height: '33px', padding: '0 14px', fontSize: '13px', fontWeight: '600',
                 borderRadius: '9999px', background: 'var(--primary)',
                 color: 'var(--on-primary)', textDecoration: 'none',
                 border: 'none', transition: 'opacity 0.2s',
@@ -114,7 +117,7 @@ export default function Navbar() {
             <button
               onClick={() => signIn()}
               style={{
-                padding: '7px 14px', fontSize: '13px', fontWeight: '600',
+                height: '33px', padding: '0 14px', fontSize: '13px', fontWeight: '600',
                 borderRadius: '9999px', background: 'var(--primary)',
                 color: 'var(--on-primary)', border: 'none', cursor: 'pointer',
                 transition: 'opacity 0.2s',
@@ -126,42 +129,44 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Dynamic Island — only shown when signed in */}
+      {/* Dynamic Island — synced to navbar theme and height */}
       {session && (
         <div ref={islandRef} style={{ position: 'relative', pointerEvents: 'all' }}>
-          {/* The pill/island itself */}
+          {/* The pill/island button */}
           <button
             onClick={() => setIslandOpen(o => !o)}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: islandOpen ? '10px' : '0px',
-              padding: islandOpen ? '5px 14px 5px 6px' : '5px',
-              background: '#0b1c30',
-              border: '1.5px solid rgba(255,255,255,0.08)',
+              gap: islandOpen ? '8px' : '0px',
+              padding: islandOpen ? '5px 14px 5px 5px' : '5px',
+              height: '45px',
+              background: 'var(--surface-container-lowest)',
+              border: '1px solid var(--outline-variant)',
               borderRadius: '9999px',
               cursor: 'pointer',
               transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
-              minWidth: islandOpen ? '160px' : '44px',
+              minWidth: islandOpen ? '150px' : '45px',
               overflow: 'hidden',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.18)',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+              boxSizing: 'border-box',
             }}
           >
             {/* Avatar */}
             <div style={{
-              width: '32px', height: '32px', borderRadius: '9999px',
+              width: '33px', height: '33px', borderRadius: '9999px',
               overflow: 'hidden', flexShrink: 0, position: 'relative',
             }}>
               {session.user?.image ? (
                 <Image
                   src={session.user.image}
                   alt={session.user.name || 'User'}
-                  width={32} height={32}
-                  style={{ borderRadius: '9999px', display: 'block' }}
+                  width={33} height={33}
+                  style={{ borderRadius: '9999px', display: 'block', objectFit: 'cover' }}
                 />
               ) : (
                 <div style={{
-                  width: '32px', height: '32px', borderRadius: '9999px',
+                  width: '33px', height: '33px', borderRadius: '9999px',
                   background: 'var(--primary)', display: 'flex',
                   alignItems: 'center', justifyContent: 'center',
                   fontSize: '13px', fontWeight: '700', color: '#fff',
@@ -173,7 +178,7 @@ export default function Navbar() {
 
             {/* Expanded name */}
             <span style={{
-              fontSize: '13px', fontWeight: '600', color: '#ffffff',
+              fontSize: '13px', fontWeight: '600', color: 'var(--on-surface)',
               whiteSpace: 'nowrap', opacity: islandExpanded ? 1 : 0,
               maxWidth: islandExpanded ? '100px' : '0px',
               transition: 'opacity 0.2s ease 0.1s, max-width 0.3s ease',
@@ -187,13 +192,13 @@ export default function Navbar() {
           {islandOpen && (
             <div style={{
               position: 'absolute',
-              top: 'calc(100% + 10px)',
+              top: 'calc(100% + 8px)',
               right: 0,
               minWidth: '200px',
               background: 'var(--surface-container-lowest)',
               border: '1px solid var(--outline-variant)',
-              borderRadius: '1rem',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
+              borderRadius: '0.875rem',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
               overflow: 'hidden',
               animation: 'islandDrop 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards',
             }}>
@@ -273,7 +278,6 @@ export default function Navbar() {
           )}
         </div>
       )}
-
     </header>
   );
 }
