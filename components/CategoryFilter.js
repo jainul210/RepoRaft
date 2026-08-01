@@ -17,7 +17,7 @@ const CATEGORIES = [
 
 export default function CategoryFilter({ active, onSelect }) {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--stack-sm)' }}>
+    <div className="category-scroll-container">
       {CATEGORIES.map((cat) => (
         <button
           key={cat}

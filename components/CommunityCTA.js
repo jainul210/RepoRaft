@@ -8,19 +8,22 @@ export default function CommunityCTA({ isLoggedIn }) {
 
   return (
     <section style={{ marginTop: '48px' }}>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: '40px',
-        flexWrap: 'wrap',
-        padding: '32px',
-        background: 'var(--surface-container-lowest)',
-        border: '1px solid var(--outline-variant)',
-        borderRadius: '0.875rem',
-      }}>
+      <div
+        className="community-cta-card"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: '40px',
+          flexWrap: 'wrap',
+          padding: '32px',
+          background: 'var(--surface-container-lowest)',
+          border: '1px solid var(--outline-variant)',
+          borderRadius: '0.875rem',
+        }}
+      >
         {/* Image */}
-        <div style={{ width: '100%', maxWidth: '300px', flexShrink: 0 }}>
+        <div className="community-cta-img-box" style={{ width: '100%', maxWidth: '300px', flexShrink: 0 }}>
           <div
             style={{
               borderRadius: '0.75rem',
@@ -42,7 +45,7 @@ export default function CommunityCTA({ isLoggedIn }) {
         </div>
 
         {/* Text */}
-        <div style={{ flex: 1, minWidth: '260px' }}>
+        <div className="community-cta-text-box" style={{ flex: 1, minWidth: '260px' }}>
           <span style={{
             fontSize: '11px', fontWeight: '600', letterSpacing: '0.1em',
             color: 'var(--primary)', textTransform: 'uppercase',
@@ -63,7 +66,7 @@ export default function CommunityCTA({ isLoggedIn }) {
             Every repository on RepoRaft is hand-vetted by our core community.
             Become a contributor today and help others navigate the sea of code.
           </p>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div className="community-cta-buttons" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             {isLoggedIn ? (
               <Link href="/submit" style={{ textDecoration: 'none' }}>
                 <button style={{

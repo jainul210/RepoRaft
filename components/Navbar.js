@@ -7,10 +7,15 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const [mounted, setMounted] = useState(false);
   const [activeNav, setActiveNav] = useState('resources');
   const [islandOpen, setIslandOpen] = useState(false);
   const [islandExpanded, setIslandExpanded] = useState(false);
   const islandRef = useRef(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Expand animation on open
   useEffect(() => {
@@ -33,7 +38,7 @@ export default function Navbar() {
   }, [islandOpen]);
 
   return (
-    <header style={{
+    <header className="nav-header" style={{
       position: 'fixed',
       top: '16px',
       left: '0',
@@ -47,7 +52,7 @@ export default function Navbar() {
       pointerEvents: 'none',
     }}>
       {/* Main Navbar Pill */}
-      <nav style={{
+      <nav className="nav-pill" style={{
         display: 'flex',
         alignItems: 'center',
         gap: '4px',
@@ -61,7 +66,7 @@ export default function Navbar() {
         pointerEvents: 'all',
       }}>
         {/* Logo */}
-        <div style={{ padding: '0 16px', marginRight: '4px' }}>
+        <div className="nav-logo-box" style={{ padding: '0 16px', marginRight: '4px' }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
             <span style={{
               fontSize: '18px', fontWeight: '700',
@@ -80,45 +85,33 @@ export default function Navbar() {
             { key: 'community', label: 'Community', href: '/#community' },
           ].map(({ key, label, href }) => (
             <Link key={key} href={href} onClick={() => setActiveNav(key)} style={{ textDecoration: 'none' }}>
-              <span style={{
-                display: 'flex', alignItems: 'center', height: '33px',
-                padding: '0 14px', fontSize: '13px',
-                fontWeight: '600', borderRadius: '9999px', cursor: 'pointer',
-                transition: 'all 0.2s',
-                background: activeNav === key ? 'var(--primary)' : 'transparent',
-                color: activeNav === key ? 'var(--on-primary)' : 'var(--on-surface-variant)',
-              }}>
+              <span
+                className={`nav-link-item ${key === 'community' ? 'nav-item-community' : ''} ${key === 'categories' ? 'nav-item-categories' : ''} ${key === 'resources' ? 'nav-item-resources' : ''}`}
+                style={{
+                  display: 'flex', alignItems: 'center', height: '33px',
+                  padding: '0 14px', fontSize: '13px',
+                  fontWeight: '600', borderRadius: '9999px', cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  background: activeNav === key ? 'var(--primary)' : 'transparent',
+                  color: activeNav === key ? 'var(--on-primary)' : 'var(--on-surface-variant)',
+                }}
+              >
                 {label}
               </span>
             </Link>
           ))}
-
-          {/* Divider & Sign In (shown when logged out) */}
-          {status === 'loading' ? null : !session ? (
-            <>
-              <div style={{ width: '1px', height: '18px', background: 'var(--outline-variant)', margin: '0 6px' }} />
-              <button
-                onClick={() => signIn()}
-                style={{
-                  height: '33px', padding: '0 14px', fontSize: '13px', fontWeight: '600',
-                  borderRadius: '9999px', background: 'var(--primary)',
-                  color: 'var(--on-primary)', border: 'none', cursor: 'pointer',
-                  transition: 'opacity 0.2s',
-                }}
-              >
-                Sign In
-              </button>
-            </>
-          ) : null}
         </div>
       </nav>
 
-      {/* Dynamic Island — synced to navbar theme and height */}
-      {session && (
+      {/* Auth Action — Right side pill (Sign In button OR Profile Dynamic Island) */}
+      {status === 'loading' ? (
+        <div style={{ width: '45px', height: '45px', borderRadius: '9999px', background: 'var(--surface-container-lowest)', border: '1px solid var(--outline-variant)', pointerEvents: 'all' }} />
+      ) : session ? (
         <div ref={islandRef} style={{ position: 'relative', pointerEvents: 'all' }}>
           {/* The pill/island button */}
           <button
             onClick={() => setIslandOpen(o => !o)}
+            className="island-button"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -137,7 +130,7 @@ export default function Navbar() {
             }}
           >
             {/* Avatar */}
-            <div style={{
+            <div className="island-avatar-box" style={{
               width: '33px', height: '33px', borderRadius: '9999px',
               overflow: 'hidden', flexShrink: 0, position: 'relative',
             }}>
@@ -261,6 +254,34 @@ export default function Navbar() {
             </div>
           )}
         </div>
+      ) : (
+        <button
+          onClick={() => signIn()}
+          className="nav-signin-btn"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '45px',
+            padding: '0 18px',
+            fontSize: '13px',
+            fontWeight: '600',
+            lineHeight: '1',
+            borderRadius: '9999px',
+            background: 'var(--primary)',
+            color: 'var(--on-primary)',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+            transition: 'opacity 0.2s',
+            pointerEvents: 'all',
+            boxSizing: 'border-box',
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
+          }}
+        >
+          Sign In
+        </button>
       )}
     </header>
   );

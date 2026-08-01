@@ -8,18 +8,21 @@ export default function Footer() {
       margin: '0 auto',
       padding: '0 var(--container-padding) 48px',
     }}>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '24px',
-        padding: '24px 28px',
-        background: 'var(--surface-container-lowest)',
-        border: '1px solid var(--outline-variant)',
-        borderRadius: '0.875rem',
-      }}>
+      <div
+        className="footer-card"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '24px',
+          padding: '24px 28px',
+          background: 'var(--surface-container-lowest)',
+          border: '1px solid var(--outline-variant)',
+          borderRadius: '0.875rem',
+        }}
+      >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
           <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--on-surface)', letterSpacing: '-0.01em' }}>
             RepoRaft

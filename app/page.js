@@ -44,12 +44,15 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div style={{
-      width: '100%',
-      maxWidth: '1280px',
-      margin: '0 auto',
-      padding: '120px var(--container-padding) var(--stack-lg)',
-    }}>
+    <div
+      className="main-page-wrapper"
+      style={{
+        width: '100%',
+        maxWidth: '1280px',
+        margin: '0 auto',
+        padding: '120px var(--container-padding) var(--stack-lg)',
+      }}
+    >
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 'var(--stack-lg)' }}>
 
         {/* Resource Feed — also contains the #categories anchor */}
