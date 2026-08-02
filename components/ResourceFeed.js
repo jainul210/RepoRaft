@@ -8,6 +8,7 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [sortBy, setSortBy] = useState('top');
+  const [visibleCount, setVisibleCount] = useState(5);
 
   const filtered = useMemo(() => {
     let result = [...resources];
@@ -35,6 +36,10 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
 
     return result;
   }, [resources, search, activeCategory, sortBy]);
+
+  const visibleResources = useMemo(() => {
+    return filtered.slice(0, visibleCount);
+  }, [filtered, visibleCount]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -162,7 +167,7 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {filtered.map((resource, i) => (
+          {visibleResources.map((resource, i) => (
             <div
               key={resource.id}
               style={{ animationDelay: `${i * 40}ms` }}
@@ -175,6 +180,50 @@ export default function ResourceFeed({ resources, userUpvotedIds, isLoggedIn, cu
               />
             </div>
           ))}
+
+          {/* Show More / Show Less pagination control when > 5 items */}
+          {filtered.length > 5 && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '16px', gap: '8px' }}>
+              <p style={{ fontSize: '12px', color: 'var(--on-surface-variant)' }}>
+                Showing {visibleResources.length} of {filtered.length} resources
+              </p>
+              {visibleCount < filtered.length ? (
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + 5)}
+                  style={{
+                    padding: '10px 24px',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    borderRadius: '9999px',
+                    background: 'var(--surface-container-lowest)',
+                    border: '1px solid var(--outline-variant)',
+                    color: 'var(--primary)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                  }}
+                >
+                  Show More Resources ({filtered.length - visibleCount} remaining)
+                </button>
+              ) : (
+                <button
+                  onClick={() => setVisibleCount(5)}
+                  style={{
+                    padding: '8px 18px',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    borderRadius: '9999px',
+                    background: 'transparent',
+                    border: '1px solid var(--outline-variant)',
+                    color: 'var(--on-surface-variant)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Show Less
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
